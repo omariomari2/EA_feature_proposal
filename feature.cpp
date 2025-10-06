@@ -1,9 +1,12 @@
 #ifndef GAME_SYSTEM_H
 #define GAME_SYSTEM_H
 
+
 #include <string>
 #include <vector>
 #include <queue>
+#include "include/Flashback.h"
+#include "include/FlashbackManager.h"
 
 class Team;
 class Flashback;
@@ -18,8 +21,29 @@ private:
     GameEvent upcomingRivalryGame;
 
 public:
-    void detectRivalry();
-    void queueFlashback();
+    RivalryManager() {}
+
+    void detectRivalry() {
+        // Example: detect rivalries based on some criteria (stub)
+        if (!rivalries.empty()) {
+            // Set the next rivalry game (stub logic)
+        }
+    }
+
+    void queueFlashback() {
+        // Example: queue a flashback for the next rivalry (stub)
+        if (!rivalries.empty()) {
+            // rivalries[0].addFlashback(...);
+        }
+    }
+
+    void addRivalry(const Rivalry& rivalry) {
+        rivalries.push_back(rivalry);
+    }
+
+    const std::vector<Rivalry>& getRivalries() const {
+        return rivalries;
+    }
 };
 
 
@@ -31,32 +55,25 @@ private:
     std::string legacyStats;
 
 public:
-    std::vector<Flashback> getFlashbacks();
-    std::string getStats();
+    Rivalry(const Team& a, const Team& b, const std::string& stats = "")
+        : teamA(a), teamB(b), legacyStats(stats) {}
+
+    std::vector<Flashback> getFlashbacks() {
+        return flashbacks;
+    }
+
+    std::string getStats() {
+        return legacyStats;
+    }
+
+    void addFlashback(const Flashback& fb) {
+        flashbacks.push_back(fb);
+    }
 };
 
-class FlashbackManager {
-private:
-    Flashback currentFlashback;
-    std::queue<Flashback> flashbackQueue;
+// ...existing code...
 
-public:
-    void play();
-    void skip();
-    void unlockRewards();
-};
-
-class Flashback {
-private:
-    int momentId;
-    std::string videoAsset;
-    std::string description;
-    bool isUnlocked;
-
-public:
-    void play();
-    void unlock();
-};
+// ...existing code...
 
 class RewardManager {
 private:
